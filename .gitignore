@@ -51,3 +51,9 @@ database/*.log
 # OS
 .DS_Store
 Thumbs.db
+
+# Local PostgreSQL tools
+tools/
+
+# Temporary files
+TEXT.TEXT
