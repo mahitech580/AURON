@@ -29,4 +29,25 @@ Thumbs.db
 htmlcov/
 
 # Logs
-*.log
+*.log# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Environment
+.env
+
+# Local PostgreSQL installation
+tools/postgresql/
+
+# Local PostgreSQL database
+database/postgres-data/
+database/*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
