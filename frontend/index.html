@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="AURON - Intelligent commerce and fulfillment platform"
+    >
+    <title>AURON — Commerce Platform</title>
+</head>
+
+<body>
+
+    <header>
+        <div>
+            <h1>AURON</h1>
+            <p>Intelligent Commerce &amp; Fulfillment Platform</p>
+        </div>
+
+        <nav aria-label="Main navigation">
+            <a href="#home">Home</a>
+            <a href="#products">Products</a>
+            <a href="#orders">Orders</a>
+            <a href="#tracking">Tracking</a>
+            <a href="#account">Account</a>
+            <a href="#admin">Admin</a>
+        </nav>
+
+        <div>
+            <a href="#cart">Cart</a>
+            <a href="#login">Login</a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- HOME -->
+        <section id="home">
+            <header>
+                <h2>Welcome to AURON</h2>
+                <p>
+                    Discover products, manage your cart, place orders,
+                    and track fulfillment from one platform.
+                </p>
+            </header>
+
+            <form action="#products" method="get">
+                <label for="home-search">Search AURON</label>
+                <input
+                    id="home-search"
+                    name="q"
+                    type="search"
+                    placeholder="Search products..."
+                >
+                <button type="submit">Search</button>
+            </form>
+
+            <div>
+                <article>
+                    <h3>Fast Commerce</h3>
+                    <p>Explore products and complete checkout efficiently.</p>
+                </article>
+
+                <article>
+                    <h3>Reliable Fulfillment</h3>
+                    <p>Track orders from checkout through delivery.</p>
+                </article>
+
+                <article>
+                    <h3>Intelligent Platform</h3>
+                    <p>Designed for recommendations, forecasting, and analytics.</p>
+                </article>
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- PRODUCT CATALOG -->
+        <section id="products">
+            <header>
+                <h2>Product Catalog</h2>
+                <p>Browse available AURON products.</p>
+            </header>
+
+            <form action="#products" method="get">
+                <fieldset>
+                    <legend>Product Search</legend>
+
+                    <label for="product-search">Search</label>
+                    <input
+                        id="product-search"
+                        name="search"
+                        type="search"
+                        placeholder="Product name"
+                    >
+
+                    <label for="category">Category</label>
+                    <select id="category" name="category">
+                        <option value="">All Categories</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="computers">Computers</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="home">Home</option>
+                    </select>
+
+                    <label for="sort">Sort</label>
+                    <select id="sort" name="sort">
+                        <option value="relevance">Relevance</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest</option>
+                    </select>
+
+                    <button type="submit">Apply</button>
+                </fieldset>
+            </form>
+
+            <div>
+                <article>
+                    <header>
+                        <h3>AURON Wireless Mouse</h3>
+                    </header>
+                    <p>Ergonomic wireless mouse.</p>
+                    <p>Category: Electronics</p>
+                    <p>Price: ?799.99</p>
+                    <p>Stock: 50</p>
+                    <a href="#product-1">View Product</a>
+                    <button type="button">Add to Cart</button>
+                </article>
+
+                <article>
+                    <header>
+                        <h3>AURON Mechanical Keyboard</h3>
+                    </header>
+                    <p>Mechanical keyboard for productivity and gaming.</p>
+                    <p>Category: Accessories</p>
+                    <p>Price: ?2,499.99</p>
+                    <p>Stock: 30</p>
+                    <a href="#product-2">View Product</a>
+                    <button type="button">Add to Cart</button>
+                </article>
+
+                <article>
+                    <header>
+                        <h3>AURON USB-C Hub</h3>
+                    </header>
+                    <p>Multi-port USB-C connectivity hub.</p>
+                    <p>Category: Electronics</p>
+                    <p>Price: ?1,299.99</p>
+                    <p>Stock: 25</p>
+                    <a href="#product-3">View Product</a>
+                    <button type="button">Add to Cart</button>
+                </article>
+            </div>
+
+            <nav aria-label="Product pagination">
+                <a href="#products">Previous</a>
+                <a href="#products">1</a>
+                <a href="#products">2</a>
+                <a href="#products">3</a>
+                <a href="#products">Next</a>
+            </nav>
+        </section>
+
+        <hr>
+
+        <!-- PRODUCT DETAILS -->
+        <section id="product-1">
+            <header>
+                <h2>AURON Wireless Mouse</h2>
+            </header>
+
+            <article>
+                <p>Ergonomic wireless mouse.</p>
+                <p>Category: Electronics</p>
+                <p>Price: ?799.99</p>
+                <p>Available stock: 50</p>
+
+                <form action="#cart" method="get">
+                    <label for="quantity">Quantity</label>
+                    <input
+                        id="quantity"
+                        name="quantity"
+                        type="number"
+                        min="1"
+                        value="1"
+                    >
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </article>
+        </section>
+
+        <hr>
+
+        <!-- CART -->
+        <section id="cart">
+            <header>
+                <h2>Shopping Cart</h2>
+            </header>
+
+            <article>
+                <h3>AURON Wireless Mouse</h3>
+                <p>Unit Price: ?799.99</p>
+
+                <label for="cart-quantity">Quantity</label>
+                <input
+                    id="cart-quantity"
+                    type="number"
+                    min="1"
+                    value="1"
+                >
+
+                <p>Subtotal: ?799.99</p>
+
+                <button type="button">Update Cart</button>
+                <button type="button">Remove</button>
+            </article>
+
+            <div>
+                <p>Subtotal: ?799.99</p>
+                <p>Shipping: ?0.00</p>
+                <p>Tax: ?144.00</p>
+                <p><strong>Total: ?943.99</strong></p>
+            </div>
+
+            <a href="#checkout">Proceed to Checkout</a>
+        </section>
+
+        <hr>
+
+        <!-- CHECKOUT -->
+        <section id="checkout">
+            <header>
+                <h2>Checkout</h2>
+            </header>
+
+            <form action="#orders" method="post">
+
+                <fieldset>
+                    <legend>Customer Information</legend>
+
+                    <label for="full-name">Full Name</label>
+                    <input id="full-name" name="full_name" type="text" required>
+
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" required>
+
+                    <label for="phone">Phone</label>
+                    <input id="phone" name="phone" type="tel" required>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Shipping Address</legend>
+
+                    <label for="address">Address</label>
+                    <textarea
+                        id="address"
+                        name="address"
+                        rows="4"
+                        required
+                    ></textarea>
+
+                    <label for="city">City</label>
+                    <input id="city" name="city" type="text" required>
+
+                    <label for="state">State</label>
+                    <input id="state" name="state" type="text" required>
+
+                    <label for="postal-code">Postal Code</label>
+                    <input
+                        id="postal-code"
+                        name="postal_code"
+                        type="text"
+                        required
+                    >
+                </fieldset>
+
+                <fieldset>
+                    <legend>Payment</legend>
+
+                    <label for="payment">Payment Method</label>
+                    <select id="payment" name="payment">
+                        <option value="card">Card</option>
+                        <option value="upi">UPI</option>
+                        <option value="cod">Cash on Delivery</option>
+                    </select>
+                </fieldset>
+
+                <button type="submit">Place Order</button>
+            </form>
+        </section>
+
+        <hr>
+
+        <!-- ORDERS -->
+        <section id="orders">
+            <header>
+                <h2>My Orders</h2>
+            </header>
+
+            <article>
+                <h3>Order #AUR-10001</h3>
+                <p>Status: Confirmed</p>
+                <p>Total: ?943.99</p>
+                <p>Placed: September 12, 2026</p>
+                <a href="#order-details">View Order</a>
+            </article>
+        </section>
+
+        <hr>
+
+        <!-- ORDER DETAILS -->
+        <section id="order-details">
+            <header>
+                <h2>Order #AUR-10001</h2>
+            </header>
+
+            <dl>
+                <dt>Order Status</dt>
+                <dd>Confirmed</dd>
+
+                <dt>Payment Status</dt>
+                <dd>Paid</dd>
+
+                <dt>Fulfillment Status</dt>
+                <dd>Processing</dd>
+
+                <dt>Total</dt>
+                <dd>?943.99</dd>
+            </dl>
+
+            <a href="#tracking">Track Shipment</a>
+        </section>
+
+        <hr>
+
+        <!-- TRACKING -->
+        <section id="tracking">
+            <header>
+                <h2>Order Tracking</h2>
+            </header>
+
+            <ol>
+                <li>Order Placed</li>
+                <li>Payment Confirmed</li>
+                <li>Inventory Reserved</li>
+                <li>Warehouse Allocated</li>
+                <li>Picking</li>
+                <li>Packing</li>
+                <li>Shipped</li>
+                <li>Out for Delivery</li>
+                <li>Delivered</li>
+            </ol>
+
+            <p>Current Status: Inventory Reserved</p>
+        </section>
+
+        <hr>
+
+        <!-- ACCOUNT -->
+        <section id="account">
+            <header>
+                <h2>Account</h2>
+            </header>
+
+            <article>
+                <h3>Customer Profile</h3>
+                <dl>
+                    <dt>Name</dt>
+                    <dd>AURON Customer</dd>
+
+                    <dt>Email</dt>
+                    <dd>customer@example.com</dd>
+
+                    <dt>Account Type</dt>
+                    <dd>Customer</dd>
+                </dl>
+            </article>
+
+            <nav aria-label="Account navigation">
+                <a href="#orders">My Orders</a>
+                <a href="#account">Profile</a>
+                <a href="#account">Addresses</a>
+                <a href="#account">Security</a>
+            </nav>
+        </section>
+
+        <hr>
+
+        <!-- LOGIN -->
+        <section id="login">
+            <header>
+                <h2>Login</h2>
+            </header>
+
+            <form action="#account" method="post">
+                <label for="login-email">Email</label>
+                <input
+                    id="login-email"
+                    name="email"
+                    type="email"
+                    required
+                >
+
+                <label for="login-password">Password</label>
+                <input
+                    id="login-password"
+                    name="password"
+                    type="password"
+                    required
+                >
+
+                <button type="submit">Login</button>
+            </form>
+        </section>
+
+        <hr>
+
+        <!-- ADMIN -->
+        <section id="admin">
+            <header>
+                <h2>AURON Admin Dashboard</h2>
+            </header>
+
+            <div>
+                <article>
+                    <h3>Total Products</h3>
+                    <p>1250</p>
+                </article>
+
+                <article>
+                    <h3>Total Orders</h3>
+                    <p>4821</p>
+                </article>
+
+                <article>
+                    <h3>Pending Orders</h3>
+                    <p>137</p>
+                </article>
+
+                <article>
+                    <h3>Low Stock Products</h3>
+                    <p>28</p>
+                </article>
+            </div>
+
+            <section>
+                <h3>Product Management</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>AURON Wireless Mouse</td>
+                            <td>Electronics</td>
+                            <td>?799.99</td>
+                            <td>50</td>
+                            <td>Active</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3>Order Management</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Customer</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Fulfillment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AUR-10001</td>
+                            <td>AURON Customer</td>
+                            <td>?943.99</td>
+                            <td>Confirmed</td>
+                            <td>Processing</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3>Inventory Overview</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Warehouse</th>
+                            <th>Total Items</th>
+                            <th>Reserved</th>
+                            <th>Available</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hyderabad Warehouse</td>
+                            <td>10000</td>
+                            <td>1250</td>
+                            <td>8750</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3>Analytics</h3>
+                <dl>
+                    <dt>Revenue Today</dt>
+                    <dd>?1,24,500</dd>
+
+                    <dt>Orders Today</dt>
+                    <dd>184</dd>
+
+                    <dt>Average Order Value</dt>
+                    <dd>?676.63</dd>
+
+                    <dt>Inventory Utilization</dt>
+                    <dd>72%</dd>
+                </dl>
+            </section>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AURON. All rights reserved.</p>
+        <nav aria-label="Footer navigation">
+            <a href="#home">Home</a>
+            <a href="#products">Products</a>
+            <a href="#account">Account</a>
+            <a href="#admin">Admin</a>
+        </nav>
+    </footer>
+
+</body>
+</html>
