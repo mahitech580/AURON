@@ -1,5 +1,5 @@
 /* =========================================================
-   AURON — Commerce Platform
+   AURON â€” Commerce Platform
    Global Stylesheet
    ========================================================= */
 
@@ -18,6 +18,8 @@ html {
 }
 
 body {
+    min-height: 100vh;
+
     font-family:
         Inter,
         ui-sans-serif,
@@ -26,14 +28,16 @@ body {
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
+
     line-height: 1.6;
+
     background: #f5f7fa;
     color: #172033;
 }
 
 img {
-    max-width: 100%;
     display: block;
+    max-width: 100%;
 }
 
 a {
@@ -53,11 +57,9 @@ button {
 }
 
 
-/* ---------- Layout ---------- */
-
-body {
-    min-height: 100vh;
-}
+/* =========================================================
+   LAYOUT
+   ========================================================= */
 
 header,
 main,
@@ -66,7 +68,7 @@ footer {
 }
 
 main {
-    max-width: 1280px;
+    width: min(1280px, 100%);
     margin: 0 auto;
     padding: 32px 24px 64px;
 }
@@ -81,7 +83,9 @@ main > hr {
 }
 
 
-/* ---------- Header ---------- */
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 body > header {
     position: sticky;
@@ -97,7 +101,9 @@ body > header {
 
     background: #ffffff;
     border-bottom: 1px solid #e4e8ef;
-    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+
+    box-shadow:
+        0 2px 12px rgba(15, 23, 42, 0.05);
 }
 
 body > header > div:first-child {
@@ -126,8 +132,9 @@ body > header nav {
 body > header nav a,
 body > header > div:last-child a {
     color: #465267;
-    font-weight: 600;
     font-size: 0.92rem;
+    font-weight: 600;
+
     transition:
         color 0.2s ease,
         transform 0.2s ease;
@@ -146,7 +153,9 @@ body > header > div:last-child {
 }
 
 
-/* ---------- Typography ---------- */
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
 
 h1,
 h2,
@@ -156,13 +165,13 @@ h3 {
 }
 
 h2 {
-    font-size: clamp(1.8rem, 3vw, 2.7rem);
     margin-bottom: 12px;
+    font-size: clamp(1.8rem, 3vw, 2.7rem);
 }
 
 h3 {
-    font-size: 1.15rem;
     margin-bottom: 10px;
+    font-size: 1.15rem;
 }
 
 p {
@@ -178,7 +187,9 @@ section > header p {
 }
 
 
-/* ---------- Home ---------- */
+/* =========================================================
+   HOME
+   ========================================================= */
 
 #home {
     padding-top: 72px;
@@ -186,7 +197,9 @@ section > header p {
 
 #home > header h2 {
     max-width: 760px;
-    font-size: clamp(2.4rem, 5vw, 4.3rem);
+
+    font-size:
+        clamp(2.4rem, 5vw, 4.3rem);
 }
 
 #home > header p {
@@ -197,15 +210,19 @@ section > header p {
 #home > form {
     display: flex;
     gap: 10px;
+
     max-width: 720px;
     margin: 30px 0;
 }
 
 #home > form label {
     position: absolute;
+
     width: 1px;
     height: 1px;
+
     overflow: hidden;
+
     clip: rect(0, 0, 0, 0);
 }
 
@@ -214,12 +231,17 @@ section > header p {
 }
 
 
-/* ---------- Cards ---------- */
+/* =========================================================
+   CARDS
+   ========================================================= */
 
 #home > div,
 #products > div {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
     gap: 20px;
 }
 
@@ -231,10 +253,12 @@ section > header p {
     padding: 24px;
 
     background: #ffffff;
+
     border: 1px solid #e1e6ee;
     border-radius: 16px;
 
-    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, 0.04);
 }
 
 #home article h3 {
@@ -242,7 +266,9 @@ section > header p {
 }
 
 
-/* ---------- Forms ---------- */
+/* =========================================================
+   FORMS
+   ========================================================= */
 
 form {
     color: #273247;
@@ -252,9 +278,10 @@ fieldset {
     margin: 0 0 20px;
     padding: 24px;
 
+    background: #ffffff;
+
     border: 1px solid #dce2eb;
     border-radius: 14px;
-    background: #ffffff;
 }
 
 legend {
@@ -264,9 +291,11 @@ legend {
 
 label {
     display: block;
+
     margin-bottom: 7px;
 
     color: #39445a;
+
     font-size: 0.9rem;
     font-weight: 600;
 }
@@ -294,7 +323,10 @@ input:focus,
 select:focus,
 textarea:focus {
     border-color: #4d6fff;
-    box-shadow: 0 0 0 3px rgba(77, 111, 255, 0.12);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(77, 111, 255, 0.12);
 }
 
 textarea {
@@ -308,12 +340,15 @@ fieldset > select + label {
 }
 
 
-/* ---------- Buttons ---------- */
+/* =========================================================
+   BUTTONS
+   ========================================================= */
 
 button,
 #checkout button,
 #home > form button {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
@@ -338,12 +373,24 @@ button:hover,
 #checkout button:hover,
 #home > form button:hover {
     background: #27334a;
+
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+
+    box-shadow:
+        0 8px 20px
+        rgba(15, 23, 42, 0.12);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: none;
 }
 
 
-/* ---------- Product Search ---------- */
+/* =========================================================
+   PRODUCT SEARCH
+   ========================================================= */
 
 #products form {
     margin-bottom: 28px;
@@ -351,8 +398,12 @@ button:hover,
 
 #products fieldset {
     display: grid;
-    grid-template-columns: 1.7fr 1fr 1fr auto;
+
+    grid-template-columns:
+        1.7fr 1fr 1fr auto;
+
     gap: 14px;
+
     align-items: end;
 }
 
@@ -365,10 +416,13 @@ button:hover,
 }
 
 
-/* ---------- Products ---------- */
+/* =========================================================
+   PRODUCTS
+   ========================================================= */
 
 #products > div {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 }
 
 #products article {
@@ -383,7 +437,9 @@ button:hover,
 
 #products article a {
     margin-top: 12px;
+
     color: #445fdd;
+
     font-weight: 700;
 }
 
@@ -396,28 +452,35 @@ button:hover,
 }
 
 
-/* ---------- Pagination ---------- */
+/* =========================================================
+   PAGINATION
+   ========================================================= */
 
 #products nav[aria-label="Product pagination"] {
     display: flex;
-    justify-content: center;
+
     align-items: center;
+    justify-content: center;
+
     gap: 10px;
+
     margin-top: 32px;
 }
 
 #products nav[aria-label="Product pagination"] a {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
     min-width: 40px;
     min-height: 40px;
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    background: #ffffff;
 
     border: 1px solid #d8dee8;
     border-radius: 9px;
 
-    background: #ffffff;
     color: #455166;
 
     font-weight: 600;
@@ -429,21 +492,27 @@ button:hover,
 }
 
 
-/* ---------- Product Details ---------- */
+/* =========================================================
+   PRODUCT DETAILS
+   ========================================================= */
 
 #product-1 article {
     max-width: 760px;
     padding: 28px;
 
     background: #ffffff;
+
     border: 1px solid #e1e6ee;
     border-radius: 16px;
 }
 
 #product-1 form {
     display: flex;
+
     align-items: end;
+
     gap: 12px;
+
     margin-top: 22px;
 }
 
@@ -456,7 +525,9 @@ button:hover,
 }
 
 
-/* ---------- Cart ---------- */
+/* =========================================================
+   CART
+   ========================================================= */
 
 #cart article {
     max-width: 760px;
@@ -470,34 +541,40 @@ button:hover,
 
 #cart > div {
     max-width: 420px;
-    margin: 0 0 24px auto;
 
+    margin: 0 0 24px auto;
     padding: 24px;
 
     background: #ffffff;
+
     border: 1px solid #dfe5ed;
     border-radius: 14px;
 }
 
 #cart > div p {
     display: flex;
+
     justify-content: space-between;
+
     margin-bottom: 8px;
 }
 
 #cart > div p:last-child {
     padding-top: 10px;
     margin-top: 12px;
+
     border-top: 1px solid #e2e7ef;
 }
 
 #cart > a {
     display: inline-flex;
+
     padding: 12px 20px;
 
-    border-radius: 10px;
     background: #172033;
     color: #ffffff;
+
+    border-radius: 10px;
 
     font-weight: 700;
 }
@@ -507,7 +584,9 @@ button:hover,
 }
 
 
-/* ---------- Checkout ---------- */
+/* =========================================================
+   CHECKOUT
+   ========================================================= */
 
 #checkout form {
     max-width: 860px;
@@ -515,7 +594,10 @@ button:hover,
 
 #checkout fieldset {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
+
     gap: 14px;
 }
 
@@ -533,7 +615,9 @@ button:hover,
 }
 
 
-/* ---------- Orders ---------- */
+/* =========================================================
+   ORDERS
+   ========================================================= */
 
 #orders article {
     max-width: 760px;
@@ -545,13 +629,18 @@ button:hover,
 
 #orders article a {
     display: inline-block;
+
     margin-top: 14px;
+
     color: #445fdd;
+
     font-weight: 700;
 }
 
 
-/* ---------- Order Details ---------- */
+/* =========================================================
+   ORDER DETAILS
+   ========================================================= */
 
 #order-details {
     max-width: 900px;
@@ -559,27 +648,33 @@ button:hover,
 
 dl {
     display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 0;
+
+    grid-template-columns:
+        200px 1fr;
 
     max-width: 760px;
 
     background: #ffffff;
+
     border: 1px solid #e0e6ef;
     border-radius: 14px;
+
     overflow: hidden;
 }
 
 dt,
 dd {
     padding: 14px 18px;
+
     border-bottom: 1px solid #e6ebf2;
 }
 
 dt {
     background: #f7f9fc;
-    font-weight: 700;
+
     color: #3b465b;
+
+    font-weight: 700;
 }
 
 dd {
@@ -588,20 +683,26 @@ dd {
 
 #order-details > a {
     display: inline-flex;
+
     margin-top: 20px;
     padding: 11px 18px;
 
     background: #172033;
     color: #ffffff;
+
     border-radius: 10px;
+
     font-weight: 700;
 }
 
 
-/* ---------- Tracking ---------- */
+/* =========================================================
+   TRACKING
+   ========================================================= */
 
 #tracking ol {
     max-width: 760px;
+
     margin: 24px 0;
     padding-left: 28px;
 }
@@ -609,23 +710,30 @@ dd {
 #tracking li {
     margin-bottom: 13px;
     padding-left: 5px;
+
     color: #4f5c71;
+
     font-weight: 600;
 }
 
 #tracking > p {
     display: inline-block;
+
     padding: 10px 14px;
 
-    border-radius: 9px;
     background: #eaf0ff;
 
+    border-radius: 9px;
+
     color: #304ab0;
+
     font-weight: 700;
 }
 
 
-/* ---------- Account ---------- */
+/* =========================================================
+   ACCOUNT
+   ========================================================= */
 
 #account article {
     max-width: 760px;
@@ -634,7 +742,9 @@ dd {
 
 #account nav {
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 12px;
 }
 
@@ -642,11 +752,13 @@ dd {
     padding: 10px 14px;
 
     background: #ffffff;
+
     border: 1px solid #dce2eb;
     border-radius: 9px;
 
-    font-weight: 600;
     color: #465267;
+
+    font-weight: 600;
 }
 
 #account nav a:hover {
@@ -655,13 +767,16 @@ dd {
 }
 
 
-/* ---------- Login ---------- */
+/* =========================================================
+   LOGIN
+   ========================================================= */
 
 #login form {
     max-width: 520px;
     padding: 26px;
 
     background: #ffffff;
+
     border: 1px solid #dfe5ed;
     border-radius: 16px;
 }
@@ -671,12 +786,18 @@ dd {
 }
 
 
-/* ---------- Admin ---------- */
+/* =========================================================
+   ADMIN
+   ========================================================= */
 
 #admin > div {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
     gap: 16px;
+
     margin-bottom: 32px;
 }
 
@@ -684,18 +805,22 @@ dd {
     padding: 22px;
 
     background: #ffffff;
+
     border: 1px solid #dfe5ed;
     border-radius: 14px;
 }
 
 #admin > div article h3 {
     color: #5d687a;
+
     font-size: 0.9rem;
+
     letter-spacing: 0;
 }
 
 #admin > div article p {
     color: #172033;
+
     font-size: 1.8rem;
     font-weight: 800;
 }
@@ -704,27 +829,39 @@ dd {
     margin-top: 28px;
 }
 
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
 table {
     width: 100%;
+
     border-collapse: collapse;
 
-    overflow: hidden;
-
     background: #ffffff;
+
     border: 1px solid #dfe5ed;
+
     border-radius: 14px;
+
+    overflow: hidden;
 }
 
 th,
 td {
     padding: 14px 16px;
+
     text-align: left;
+
     border-bottom: 1px solid #e7ebf1;
 }
 
 th {
     background: #f5f7fb;
+
     color: #3d485c;
+
     font-size: 0.88rem;
 }
 
@@ -741,30 +878,39 @@ tbody tr:last-child td {
 }
 
 
-/* ---------- Footer ---------- */
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 body > footer {
     padding: 32px 24px;
 
     background: #172033;
+
     color: #ffffff;
 }
 
 body > footer p {
     color: #b8c2d3;
+
     text-align: center;
 }
 
 body > footer nav {
     display: flex;
+
     justify-content: center;
+
     flex-wrap: wrap;
+
     gap: 18px;
+
     margin-top: 12px;
 }
 
 body > footer nav a {
     color: #d8deea;
+
     font-size: 0.9rem;
 }
 
@@ -773,11 +919,28 @@ body > footer nav a:hover {
 }
 
 
-/* ---------- Responsive: Tablet ---------- */
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+:focus-visible {
+    outline:
+        3px solid
+        rgba(77, 111, 255, 0.35);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
 
 @media (max-width: 1024px) {
+
     body > header {
         flex-wrap: wrap;
+
         padding: 16px 20px;
     }
 
@@ -787,16 +950,19 @@ body > footer nav a:hover {
 
     body > header nav {
         order: 3;
+
         width: 100%;
     }
 
     #home > div,
     #products > div {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 
     #products fieldset {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns:
+            1fr 1fr;
     }
 
     #products fieldset button {
@@ -804,14 +970,18 @@ body > footer nav a:hover {
     }
 
     #admin > div {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 }
 
 
-/* ---------- Responsive: Mobile ---------- */
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 680px) {
+
     main {
         padding: 16px;
     }
@@ -822,13 +992,17 @@ body > footer nav a:hover {
 
     body > header {
         position: static;
+
         align-items: flex-start;
+
         flex-direction: column;
+
         padding: 16px;
     }
 
     body > header nav {
         justify-content: flex-start;
+
         gap: 12px;
     }
 
@@ -869,6 +1043,7 @@ body > footer nav a:hover {
 
     #product-1 form {
         align-items: stretch;
+
         flex-direction: column;
     }
 
@@ -885,8 +1060,9 @@ body > footer nav a:hover {
     }
 
     dt {
-        border-bottom: 0;
         padding-bottom: 5px;
+
+        border-bottom: 0;
     }
 
     dd {
@@ -899,23 +1075,20 @@ body > footer nav a:hover {
 
     table {
         display: block;
+
         overflow-x: auto;
+
         white-space: nowrap;
     }
 }
 
 
-/* ---------- Accessibility ---------- */
-
-:focus-visible {
-    outline: 3px solid rgba(77, 111, 255, 0.35);
-    outline-offset: 2px;
-}
-
-
-/* ---------- Print ---------- */
+/* =========================================================
+   PRINT
+   ========================================================= */
 
 @media print {
+
     body {
         background: #ffffff;
     }
