@@ -4,13 +4,13 @@
 
 AURON is a production-oriented commerce platform designed to model the engineering challenges behind modern large-scale e-commerce systems.
 
-Instead of treating AURON as a simple CRUD application, the system focuses on **scalability, reliability, concurrency, distributed workflows, event-driven architecture, observability, and intelligent decision-making**.
+Instead of treating AURON as a simple CRUD application, the project focuses on **scalability, reliability, concurrency, distributed workflows, event-driven architecture, observability, and intelligent decision-making**.
 
 ---
 
 ## 🚀 What AURON Solves
 
-AURON manages the complete commerce lifecycle:
+AURON is designed to manage the complete commerce lifecycle:
 
 ```text
 Customer
@@ -40,14 +40,14 @@ Delivery
 Notification
 ```
 
-The platform is designed to handle problems such as:
+The platform is designed around challenges such as:
 
-* High-volume order creation
+* High-volume order processing
 * Inventory overselling
 * Concurrent stock reservations
 * Duplicate requests
-* Failed distributed operations
-* Retryable failures
+* Distributed failures
+* Retryable operations
 * Event processing
 * Order state management
 * Warehouse allocation
@@ -61,12 +61,13 @@ The platform is designed to handle problems such as:
 
 # 🏗️ Architecture
 
-AURON follows a modular, service-oriented architecture with event-driven communication between critical components.
+AURON follows a modular service-oriented architecture.
 
 ```text
                          ┌─────────────────┐
                          │    Frontend     │
-                         │ React / Web UI  │
+                         │ HTML/CSS/JS     │
+                         │ React planned   │
                          └────────┬────────┘
                                   │
                                   ▼
@@ -78,12 +79,15 @@ AURON follows a modular, service-oriented architecture with event-driven communi
               ┌───────────────────┼───────────────────┐
               │                   │                   │
               ▼                   ▼                   ▼
-        ┌──────────┐        ┌──────────┐        ┌──────────┐
-        │   Auth   │        │ Product  │        │   Cart   │
-        │ Service  │        │ Service  │        │ Service  │
-        └──────────┘        └──────────┘        └──────────┘
-                                  │
-                                  ▼
+        ┌──────────┐        ┌──────────────┐   ┌──────────┐
+        │   Auth   │        │   Product    │   │   Cart   │
+        │ Service  │        │   Service    │   │ Service  │
+        └──────────┘        └──────┬───────┘   └──────────┘
+                                   │
+                                   ▼
+                            PostgreSQL
+                                   │
+                                   ▼
                            ┌─────────────┐
                            │    Order    │
                            │   Service   │
@@ -108,7 +112,7 @@ AURON follows a modular, service-oriented architecture with event-driven communi
                            └─────────────┘
 ```
 
-Event-driven workflows connect services asynchronously:
+Future event-driven workflows will connect services asynchronously:
 
 ```text
 Order Created
@@ -123,7 +127,119 @@ Inventory       Notification      Analytics
 
 ---
 
-# 🧩 Core Services
+# ✅ Current Implementation
+
+The following components are currently implemented and pushed to GitHub.
+
+### API Gateway
+
+* FastAPI API Gateway foundation
+* Health endpoint
+* Port `8000`
+
+```text
+GET /api/health
+```
+
+Example response:
+
+```json
+{
+  "status": "ok",
+  "service": "auron-api-gateway",
+  "version": "0.1.0"
+}
+```
+
+### Product Service
+
+The Product Service is currently the first fully functional business service.
+
+Implemented:
+
+* FastAPI
+* SQLAlchemy
+* PostgreSQL
+* Product model
+* Pydantic request/response schemas
+* Database session management
+* Product CRUD APIs
+* Product service health endpoint
+* Input validation
+
+Available endpoints:
+
+```text
+GET    /api/products/health
+POST   /api/products
+GET    /api/products
+GET    /api/products/{product_id}
+PUT    /api/products/{product_id}
+DELETE /api/products/{product_id}
+```
+
+### Database
+
+Current database:
+
+```text
+PostgreSQL 17
+Database: auron
+Port: 5432
+```
+
+Current product model:
+
+```text
+products
+├── id
+├── name
+├── description
+├── price
+├── category
+└── stock
+```
+
+Example product:
+
+```text
+ID:          1
+Name:        AURON Wireless Mouse
+Price:       799.99
+Category:    Electronics
+Stock:       50
+```
+
+### Frontend
+
+The initial frontend foundation is also implemented:
+
+```text
+frontend/
+├── index.html
+├── styles.css
+└── app.js
+```
+
+The frontend currently contains the structure for:
+
+* Product catalog
+* Product details
+* Search
+* Filtering
+* Sorting
+* Cart
+* Checkout
+* Orders
+* Order tracking
+* Account
+* Admin dashboard
+
+The frontend JavaScript includes client-side application logic and local storage support for cart/order state.
+
+---
+
+# 🧩 Planned Core Services
 
 | Service              | Responsibility                              |
 | -------------------- | ------------------------------------------- |
@@ -142,11 +258,11 @@ Inventory       Notification      Analytics
 
 # 🤖 AI / ML
 
-AURON also includes intelligent components designed around realistic commerce problems.
+AURON will include intelligent components based on realistic commerce problems.
 
-### Recommendation Engine
+## Recommendation Engine
 
-Provides personalized product recommendations using historical interaction and product data.
+Personalized product recommendations based on user activity and product data.
 
 ```text
 User Activity
@@ -160,9 +276,16 @@ Recommendation Model
 Personalized Products
 ```
 
-### Demand Forecasting
+Planned technologies:
 
-Predicts future product demand to assist inventory planning.
+* Python
+* NumPy
+* Pandas
+* Scikit-learn
+
+## Demand Forecasting
+
+Forecast future product demand to support inventory planning.
 
 ```text
 Historical Sales
@@ -182,13 +305,11 @@ Inventory Planning
 
 # ⚙️ Engineering Challenges
 
-AURON intentionally focuses on real software-engineering problems.
+AURON is intentionally designed around real software-engineering problems.
 
-### Concurrency
+## Concurrency
 
-Multiple customers may attempt to purchase the last available item simultaneously.
-
-Example:
+Multiple customers may try to purchase the last available item simultaneously.
 
 ```text
 Available Stock = 1
@@ -204,11 +325,11 @@ Result:
 3 rejected requests
 ```
 
-The system must prevent inventory overselling.
+The inventory system must prevent overselling through correct transaction and locking strategies.
 
-### Idempotency
+## Idempotency
 
-Repeated requests must not accidentally create duplicate orders.
+Repeated requests should not create duplicate orders.
 
 ```text
 Client
@@ -225,11 +346,11 @@ Order Service
 → One logical order
 ```
 
-### Reliability
+## Reliability
 
-Distributed operations can fail independently.
+Distributed operations may fail independently.
 
-AURON is designed to incorporate:
+Planned mechanisms include:
 
 * Retries
 * Exponential backoff
@@ -239,39 +360,41 @@ AURON is designed to incorporate:
 * Transaction boundaries
 * Structured logging
 
-### Scalability
+## Scalability
 
-The architecture is designed so individual services can scale independently according to workload.
+Individual services will be designed so they can scale independently based on workload.
 
 ---
 
 # 🛠️ Technology Stack
 
-### Frontend
+## Frontend
 
-* React.js
-* JavaScript
 * HTML
 * CSS
+* JavaScript
+* React.js — planned
 
-### Backend
+## Backend
 
 * Python
 * FastAPI
 * REST APIs
+* SQLAlchemy
+* Pydantic
 
-### Database
+## Database
 
 * PostgreSQL
 
-### AI / ML
+## AI / ML
 
 * Python
 * NumPy
 * Pandas
 * Scikit-learn
 
-### Engineering
+## Engineering
 
 * Git
 * GitHub
@@ -285,9 +408,9 @@ The architecture is designed so individual services can scale independently acco
 * Rate Limiting
 * Observability
 
-### Cloud / Infrastructure
+## Cloud / Infrastructure
 
-AWS services are explored using a **free-first development strategy**, including:
+AWS technologies planned for exploration using a free-first development strategy:
 
 * Amazon S3
 * AWS Lambda
@@ -318,6 +441,9 @@ AURON/
 │   └── admin-service/
 │
 ├── frontend/
+│   ├── index.html
+│   ├── styles.css
+│   └── app.js
 │
 ├── ai-ml/
 │   ├── recommendation-engine/
@@ -326,30 +452,27 @@ AURON/
 ├── database/
 │
 ├── messaging/
-│
 ├── infrastructure/
-│
 ├── shared/
-│
 ├── docs/
-│
 ├── tests/
-│
 ├── config/
-│
 ├── scripts/
 │
 ├── docker-compose.yml
 ├── .env.example
 ├── Makefile
+├── LICENSE
 └── README.md
 ```
+
+Local PostgreSQL binaries and database data are intentionally excluded from Git.
 
 ---
 
 # 🔄 Order Processing Flow
 
-A typical order follows:
+The planned end-to-end flow is:
 
 ```text
 Customer
@@ -377,13 +500,13 @@ Delivery
 Notification
 ```
 
-Failures at each stage are handled independently rather than assuming every operation succeeds.
+Each stage is designed to handle failures independently rather than assuming that every distributed operation succeeds.
 
 ---
 
 # 🧪 Testing Strategy
 
-AURON is built with multiple testing levels.
+AURON will use multiple testing layers:
 
 ```text
 Unit Tests
@@ -418,7 +541,7 @@ Important scenarios include:
 
 Security is treated as a core engineering requirement.
 
-Planned capabilities include:
+Planned capabilities:
 
 * JWT authentication
 * Role-based authorization
@@ -429,6 +552,8 @@ Planned capabilities include:
 * Secure environment configuration
 * Protected administrative endpoints
 * Audit logging
+
+Secrets and credentials must remain outside source control.
 
 ---
 
@@ -462,19 +587,58 @@ Create the Python environment:
 python -m venv .venv
 ```
 
-Activate it on Windows:
+Activate on Windows:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-Install service dependencies:
+Install Product Service dependencies:
+
+```powershell
+pip install -r backend/product-service/requirements.txt
+```
+
+Install API Gateway dependencies:
 
 ```powershell
 pip install -r backend/api-gateway/requirements.txt
 ```
 
-Additional service dependencies will be introduced as each service is implemented.
+Start PostgreSQL using the local development setup.
+
+Start the Product Service:
+
+```powershell
+cd backend/product-service
+$env:DATABASE_URL="postgresql://auron:auron@127.0.0.1:5432/auron"
+uvicorn app.main:app --reload --port 8001
+```
+
+Start the frontend:
+
+```powershell
+cd frontend
+python -m http.server 5500
+```
+
+Frontend:
+
+```text
+http://127.0.0.1:5500
+```
+
+Product Service:
+
+```text
+http://127.0.0.1:8001
+```
+
+Product API documentation:
+
+```text
+http://127.0.0.1:8001/docs
+```
 
 ---
 
@@ -487,12 +651,14 @@ Additional service dependencies will be introduced as each service is implemente
 * [x] Git configuration
 * [x] Python virtual environment
 * [x] API Gateway foundation
+* [x] API Gateway health endpoint
 
 ## Phase 2 — Product Platform
 
-* [ ] Product Service
-* [ ] PostgreSQL integration
-* [ ] Product CRUD
+* [x] Product Service foundation
+* [x] PostgreSQL integration
+* [x] Product model
+* [x] Product CRUD
 * [ ] Search
 * [ ] Filtering
 * [ ] Sorting
@@ -505,6 +671,7 @@ Additional service dependencies will be introduced as each service is implemente
 * [ ] Cart Service
 * [ ] Order Service
 * [ ] Checkout
+* [ ] Payment abstraction
 * [ ] Idempotency
 * [ ] Order state machine
 
@@ -530,13 +697,18 @@ Additional service dependencies will be introduced as each service is implemente
 
 ## Phase 6 — Frontend
 
-* [ ] Product catalog
-* [ ] Product details
-* [ ] Cart
-* [ ] Checkout
-* [ ] Orders
-* [ ] Tracking
-* [ ] Admin dashboard
+* [x] HTML frontend foundation
+* [x] CSS foundation
+* [x] JavaScript foundation
+* [x] Product catalog UI
+* [x] Product details UI
+* [x] Cart UI
+* [x] Checkout UI
+* [x] Orders UI
+* [x] Tracking UI
+* [x] Admin dashboard UI
+* [ ] React migration
+* [ ] Backend integration testing
 
 ## Phase 7 — Intelligence
 
@@ -610,10 +782,20 @@ Testing
 Observability
 ```
 
-Rather than simply demonstrating that an API can create and retrieve records, AURON focuses on **why systems are designed a certain way, what happens when components fail, and how the platform behaves under real-world load.**
+Rather than simply demonstrating that an API can create and retrieve records, AURON focuses on:
+
+> **Why systems are designed a certain way, what happens when components fail, and how the platform behaves under real-world load.**
 
 ---
 
-## 📜 License
+# 📜 License
 
-This project is licensed under the MIT License.
+AURON is licensed under the MIT License.
+
+See [`LICENSE`](LICENSE) for the full license text.
+
+---
+
+## Repository
+
+**GitHub:** https://github.com/mahitech580/AURON
