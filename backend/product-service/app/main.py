@@ -5,16 +5,20 @@ from app.database import SessionLocal, engine
 from app.models.product import Base, Product
 from app.schemas.product import ProductCreate, ProductResponse
 
+
 Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI(
     title="AURON Product Service",
     version="0.1.0",
+    description="Product catalog service for the AURON commerce platform.",
 )
 
 
 def get_db():
     db = SessionLocal()
+
     try:
         yield db
     finally:
@@ -40,9 +44,11 @@ def create_product(
     db: Session = Depends(get_db),
 ):
     new_product = Product(**product.model_dump())
+
     db.add(new_product)
     db.commit()
     db.refresh(new_product)
+
     return new_product
 
 
@@ -50,8 +56,14 @@ def create_product(
     "/api/products",
     response_model=list[ProductResponse],
 )
-def get_products(db: Session = Depends(get_db)):
-    return db.query(Product).order_by(Product.id).all()
+def get_products(
+    db: Session = Depends(get_db),
+):
+    return (
+        db.query(Product)
+        .order_by(Product.id)
+        .all()
+    )
 
 
 @app.get(
@@ -70,7 +82,7 @@ def get_product(
 
     if product is None:
         raise HTTPException(
-            status_code=404,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail="Product not found",
         )
 
@@ -94,7 +106,7 @@ def update_product(
 
     if product is None:
         raise HTTPException(
-            status_code=404,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail="Product not found",
         )
 
@@ -120,7 +132,7 @@ def delete_product(
 
     if product is None:
         raise HTTPException(
-            status_code=404,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail="Product not found",
         )
 
