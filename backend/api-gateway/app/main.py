@@ -1,9 +1,13 @@
 from fastapi import FastAPI
 
+
 app = FastAPI(
     title="AURON API Gateway",
     version="0.1.0",
-    description="API Gateway for the AURON commerce and fulfillment platform.",
+    description=(
+        "API Gateway for the AURON commerce and "
+        "fulfillment platform."
+    ),
 )
 
 
