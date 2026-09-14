@@ -35,7 +35,10 @@ def health_check():
     response_model=ProductResponse,
     status_code=status.HTTP_201_CREATED,
 )
-def create_product(product: ProductCreate, db: Session = Depends(get_db)):
+def create_product(
+    product: ProductCreate,
+    db: Session = Depends(get_db),
+):
     new_product = Product(**product.model_dump())
     db.add(new_product)
     db.commit()
@@ -43,14 +46,27 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     return new_product
 
 
-@app.get("/api/products", response_model=list[ProductResponse])
+@app.get(
+    "/api/products",
+    response_model=list[ProductResponse],
+)
 def get_products(db: Session = Depends(get_db)):
     return db.query(Product).order_by(Product.id).all()
 
 
-@app.get("/api/products/{product_id}", response_model=ProductResponse)
-def get_product(product_id: int, db: Session = Depends(get_db)):
-    product = db.query(Product).filter(Product.id == product_id).first()
+@app.get(
+    "/api/products/{product_id}",
+    response_model=ProductResponse,
+)
+def get_product(
+    product_id: int,
+    db: Session = Depends(get_db),
+):
+    product = (
+        db.query(Product)
+        .filter(Product.id == product_id)
+        .first()
+    )
 
     if product is None:
         raise HTTPException(
@@ -61,13 +77,20 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
     return product
 
 
-@app.put("/api/products/{product_id}", response_model=ProductResponse)
+@app.put(
+    "/api/products/{product_id}",
+    response_model=ProductResponse,
+)
 def update_product(
     product_id: int,
     product_data: ProductCreate,
     db: Session = Depends(get_db),
 ):
-    product = db.query(Product).filter(Product.id == product_id).first()
+    product = (
+        db.query(Product)
+        .filter(Product.id == product_id)
+        .first()
+    )
 
     if product is None:
         raise HTTPException(
@@ -85,8 +108,15 @@ def update_product(
 
 
 @app.delete("/api/products/{product_id}")
-def delete_product(product_id: int, db: Session = Depends(get_db)):
-    product = db.query(Product).filter(Product.id == product_id).first()
+def delete_product(
+    product_id: int,
+    db: Session = Depends(get_db),
+):
+    product = (
+        db.query(Product)
+        .filter(Product.id == product_id)
+        .first()
+    )
 
     if product is None:
         raise HTTPException(
