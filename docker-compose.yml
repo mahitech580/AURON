@@ -1,0 +1,100 @@
+services:
+
+  # =========================================================
+  # PostgreSQL
+  # =========================================================
+
+  postgres:
+    image: postgres:17
+
+    container_name: auron-postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-auron}
+      POSTGRES_USER: ${POSTGRES_USER:-auron}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+    volumes:
+      - auron_postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-auron} -d ${POSTGRES_DB:-auron}"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+    networks:
+      - auron-network
+
+
+  # =========================================================
+  # Redis
+  # =========================================================
+
+  redis:
+    image: redis:7-alpine
+
+    container_name: auron-redis
+
+    restart: unless-stopped
+
+    ports:
+      - "6379:6379"
+
+    volumes:
+      - auron_redis_data:/data
+
+    command:
+      [
+        "redis-server",
+        "--appendonly",
+        "yes"
+      ]
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "redis-cli",
+          "ping"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - auron-network
+
+
+# ===========================================================
+# Volumes
+# ===========================================================
+
+volumes:
+
+  auron_postgres_data:
+    name: auron-postgres-data
+
+  auron_redis_data:
+    name: auron-redis-data
+
+
+# ===========================================================
+# Network
+# ===========================================================
+
+networks:
+
+  auron-network:
+    name: auron-network
+    driver: bridge
