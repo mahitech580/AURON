@@ -1,10 +1,10 @@
 """
-AURON Product Service Routes
+AURON Product Service Routes.
 
 This package contains the HTTP route definitions
 used by the Product Service.
 """
 
-from .products import router as product_router
+__version__ = "0.1.0"
 
-__all__ = ["product_router"]
+__all__ = []
