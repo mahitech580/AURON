@@ -1,8 +1,9 @@
 """
 AURON API Gateway Configuration Package.
 
-This package contains configuration components
-used by the AURON API Gateway.
+Contains configuration modules used by the API Gateway.
 """
+
+__version__ = "0.1.0"
 
 __all__ = []
