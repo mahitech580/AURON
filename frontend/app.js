@@ -1390,3 +1390,222 @@ if (
 } else {
     initializeAuron();
 }
+
+/* =========================================================
+   AURON FRONTEND DEMO MODE
+   Works without the backend/database
+   ========================================================= */
+
+const AURON_DEMO_PRODUCTS = [
+    {
+        id: 1,
+        name: "AURON Wireless Mouse",
+        description: "Ergonomic wireless mouse for everyday productivity.",
+        price: 799.99,
+        category: "Electronics",
+        stock: 50
+    },
+    {
+        id: 2,
+        name: "AURON Mechanical Keyboard",
+        description: "Mechanical keyboard designed for productivity and gaming.",
+        price: 2499.99,
+        category: "Accessories",
+        stock: 30
+    },
+    {
+        id: 3,
+        name: "AURON USB-C Hub",
+        description: "Multi-port USB-C hub for modern devices.",
+        price: 1299.99,
+        category: "Electronics",
+        stock: 25
+    },
+    {
+        id: 4,
+        name: "AURON Laptop Stand",
+        description: "Adjustable aluminum laptop stand.",
+        price: 1599.99,
+        category: "Computers",
+        stock: 18
+    },
+    {
+        id: 5,
+        name: "AURON Smart Desk Lamp",
+        description: "Adjustable LED desk lamp for focused work.",
+        price: 1899.99,
+        category: "Home",
+        stock: 12
+    },
+    {
+        id: 6,
+        name: "AURON Wireless Headphones",
+        description: "Noise-isolating wireless headphones.",
+        price: 3299.99,
+        category: "Electronics",
+        stock: 20
+    }
+];
+
+const AURON_DEMO_MODE = true;
+
+function initializeDemoMode() {
+    if (!AURON_DEMO_MODE) {
+        return;
+    }
+
+    console.log("AURON Demo Mode enabled.");
+
+    if (!products || products.length === 0) {
+        products = AURON_DEMO_PRODUCTS.map(normalizeProduct);
+        renderProducts(products);
+        updateCategoryOptions();
+    }
+
+    renderCart();
+    renderOrders();
+    renderAdminStats();
+}
+
+function loadDemoProductData() {
+    products = AURON_DEMO_PRODUCTS.map(normalizeProduct);
+
+    renderProducts(products);
+    updateCategoryOptions();
+}
+
+/*
+ * Replace the normal API product loading with demo data
+ * when the backend is unavailable.
+ */
+const originalLoadProducts = loadProducts;
+
+loadProducts = async function () {
+    try {
+        const data = await originalLoadProducts();
+
+        if (Array.isArray(data) && data.length > 0) {
+            return data;
+        }
+    } catch {
+        // Demo fallback below.
+    }
+
+    loadDemoProductData();
+
+    return products;
+};
+
+/*
+ * Add a demo product if none exists.
+ */
+function ensureDemoCart() {
+    const cart = getCart();
+
+    if (cart.length === 0 && products.length > 0) {
+        console.log(
+            "Demo cart ready. Add products from the catalog."
+        );
+    }
+
+    return cart;
+}
+
+/*
+ * Demo account.
+ */
+function initializeDemoAccount() {
+    const accountKey =
+        AURON_CONFIG.storageKeys.account;
+
+    const existingAccount =
+        readStorage(accountKey, null);
+
+    if (!existingAccount) {
+        writeStorage(accountKey, {
+            name: "AURON Customer",
+            email: "customer@auron.demo",
+            type: "Customer"
+        });
+    }
+}
+
+/*
+ * Demo startup.
+ */
+async function initializeAuronDemo() {
+    initializeDemoAccount();
+    ensureDemoCart();
+
+    if (!products || products.length === 0) {
+        loadDemoProductData();
+    }
+
+    renderCart();
+    renderOrders();
+    renderAdminStats();
+
+    console.log(
+        "AURON frontend demo is ready."
+    );
+}
+
+window.AURON_DEMO = {
+    products: AURON_DEMO_PRODUCTS,
+
+    resetCart() {
+        saveCart([]);
+        renderCart();
+    },
+
+    resetOrders() {
+        saveOrders([]);
+        renderOrders();
+        renderAdminStats();
+    },
+
+    resetAll() {
+        localStorage.removeItem(
+            AURON_CONFIG.storageKeys.cart
+        );
+
+        localStorage.removeItem(
+            AURON_CONFIG.storageKeys.orders
+        );
+
+        localStorage.removeItem(
+            AURON_CONFIG.storageKeys.account
+        );
+
+        initializeDemoAccount();
+        renderCart();
+        renderOrders();
+        renderAdminStats();
+
+        console.log(
+            "AURON demo storage reset."
+        );
+    },
+
+    showProducts() {
+        console.table(products);
+    },
+
+    showCart() {
+        console.table(getCart());
+    },
+
+    showOrders() {
+        console.table(getOrders());
+    }
+};
+
+if (document.readyState === "loading") {
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeAuronDemo
+    );
+} else {
+    initializeAuronDemo();
+}
+
