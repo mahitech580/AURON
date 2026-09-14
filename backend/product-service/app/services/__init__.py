@@ -1,8 +1,9 @@
 """
-AURON Product Service Business Logic.
+AURON Product Service.
 
-This package contains service-layer modules that keep
-business logic separate from API routes.
+Business-logic service package for product operations.
 """
+
+__version__ = "0.1.0"
 
 __all__ = []
