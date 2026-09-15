@@ -1,9 +1,15 @@
 """
 AURON API Gateway Configuration Package.
 
-Contains configuration modules used by the API Gateway.
+Contains configuration and application settings for the API Gateway.
 """
+
+from .settings import Settings, get_settings, settings
 
 __version__ = "0.1.0"
 
-__all__ = []
+__all__ = [
+    "Settings",
+    "get_settings",
+    "settings",
+]
