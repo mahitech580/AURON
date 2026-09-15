@@ -1,22 +1,75 @@
-from fastapi import Depends, FastAPI, HTTPException, status
+"""
+AURON Product Service.
+
+Provides product catalog management APIs backed by PostgreSQL.
+"""
+
+from contextlib import asynccontextmanager
+from typing import Generator
+
+from fastapi import Depends, FastAPI, HTTPException, Query, status
+from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from app.config import settings
 from app.database import SessionLocal, engine
 from app.models.product import Base, Product
 from app.schemas.product import ProductCreate, ProductResponse
 
 
-Base.metadata.create_all(bind=engine)
+# =========================================================
+# Database Initialization
+# =========================================================
 
+def initialize_database() -> None:
+    """
+    Initialize database tables.
+
+    This is suitable for the current development stage of AURON.
+    Production deployments should eventually use Alembic migrations.
+    """
+    Base.metadata.create_all(bind=engine)
+
+
+# =========================================================
+# Application Lifecycle
+# =========================================================
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Manage Product Service startup and shutdown lifecycle.
+    """
+
+    initialize_database()
+
+    yield
+
+
+# =========================================================
+# FastAPI Application
+# =========================================================
 
 app = FastAPI(
-    title="AURON Product Service",
-    version="0.1.0",
-    description="Product catalog service for the AURON commerce platform.",
+    title=f"{settings.app_name} Product Service",
+    version=settings.app_version,
+    description=(
+        "Product catalog service for the AURON "
+        "commerce and fulfillment platform."
+    ),
+    lifespan=lifespan,
 )
 
 
-def get_db():
+# =========================================================
+# Database Dependency
+# =========================================================
+
+def get_db() -> Generator[Session, None, None]:
+    """
+    Provide a SQLAlchemy database session.
+    """
+
     db = SessionLocal()
 
     try:
@@ -25,14 +78,59 @@ def get_db():
         db.close()
 
 
-@app.get("/api/products/health")
-def health_check():
+# =========================================================
+# Root Endpoint
+# =========================================================
+
+@app.get("/")
+def root():
+    """
+    Product Service information endpoint.
+    """
+
     return {
-        "status": "ok",
         "service": "auron-product-service",
-        "database": "connected",
+        "version": settings.app_version,
+        "environment": settings.app_env,
+        "status": "running",
     }
 
+
+# =========================================================
+# Health Check
+# =========================================================
+
+@app.get("/api/products/health")
+def health_check(
+    db: Session = Depends(get_db),
+):
+    """
+    Check Product Service and PostgreSQL connectivity.
+    """
+
+    try:
+        db.execute(text("SELECT 1"))
+
+        return {
+            "status": "ok",
+            "service": "auron-product-service",
+            "database": "connected",
+        }
+
+    except Exception:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail={
+                "status": "unhealthy",
+                "service": "auron-product-service",
+                "database": "unavailable",
+            },
+        )
+
+
+# =========================================================
+# Create Product
+# =========================================================
 
 @app.post(
     "/api/products",
@@ -43,28 +141,68 @@ def create_product(
     product: ProductCreate,
     db: Session = Depends(get_db),
 ):
-    new_product = Product(**product.model_dump())
+    """
+    Create a new product.
+    """
 
-    db.add(new_product)
-    db.commit()
-    db.refresh(new_product)
+    new_product = Product(
+        **product.model_dump()
+    )
 
-    return new_product
+    try:
+        db.add(new_product)
+        db.commit()
+        db.refresh(new_product)
 
+        return new_product
+
+    except Exception:
+        db.rollback()
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Unable to create product",
+        )
+
+
+# =========================================================
+# List Products
+# =========================================================
 
 @app.get(
     "/api/products",
     response_model=list[ProductResponse],
 )
 def get_products(
+    skip: int = Query(
+        default=0,
+        ge=0,
+        description="Number of products to skip.",
+    ),
+    limit: int = Query(
+        default=20,
+        ge=1,
+        le=100,
+        description="Maximum number of products to return.",
+    ),
     db: Session = Depends(get_db),
 ):
+    """
+    Return a paginated list of products.
+    """
+
     return (
         db.query(Product)
         .order_by(Product.id)
+        .offset(skip)
+        .limit(limit)
         .all()
     )
 
+
+# =========================================================
+# Get Product
+# =========================================================
 
 @app.get(
     "/api/products/{product_id}",
@@ -74,6 +212,10 @@ def get_product(
     product_id: int,
     db: Session = Depends(get_db),
 ):
+    """
+    Retrieve a product by ID.
+    """
+
     product = (
         db.query(Product)
         .filter(Product.id == product_id)
@@ -88,6 +230,10 @@ def get_product(
 
     return product
 
+
+# =========================================================
+# Update Product
+# =========================================================
 
 @app.put(
     "/api/products/{product_id}",
@@ -98,6 +244,10 @@ def update_product(
     product_data: ProductCreate,
     db: Session = Depends(get_db),
 ):
+    """
+    Replace an existing product.
+    """
+
     product = (
         db.query(Product)
         .filter(Product.id == product_id)
@@ -110,20 +260,41 @@ def update_product(
             detail="Product not found",
         )
 
-    for field, value in product_data.model_dump().items():
+    update_data = product_data.model_dump()
+
+    for field, value in update_data.items():
         setattr(product, field, value)
 
-    db.commit()
-    db.refresh(product)
+    try:
+        db.commit()
+        db.refresh(product)
 
-    return product
+        return product
+
+    except Exception:
+        db.rollback()
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Unable to update product",
+        )
 
 
-@app.delete("/api/products/{product_id}")
+# =========================================================
+# Delete Product
+# =========================================================
+
+@app.delete(
+    "/api/products/{product_id}",
+)
 def delete_product(
     product_id: int,
     db: Session = Depends(get_db),
 ):
+    """
+    Delete a product.
+    """
+
     product = (
         db.query(Product)
         .filter(Product.id == product_id)
@@ -136,10 +307,20 @@ def delete_product(
             detail="Product not found",
         )
 
-    db.delete(product)
-    db.commit()
+    try:
+        db.delete(product)
+        db.commit()
 
-    return {
-        "message": "Product deleted",
-        "id": product_id,
-    }
+        return {
+            "status": "success",
+            "message": "Product deleted",
+            "id": product_id,
+        }
+
+    except Exception:
+        db.rollback()
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Unable to delete product",
+        )
