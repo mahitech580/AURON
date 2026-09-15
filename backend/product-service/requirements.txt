@@ -1,5 +1,31 @@
 fastapi
 uvicorn[standard]
+
+# Database
 sqlalchemy
 psycopg2-binary
+alembic
+
+# Validation & Configuration
 pydantic
+pydantic-settings
+
+# HTTP / Service Communication
+httpx
+
+# Redis
+redis
+
+# Security
+python-jose[cryptography]
+passlib[bcrypt]
+
+# Environment
+python-dotenv
+
+# Testing
+pytest
+pytest-asyncio
+
+# Code Quality
+ruff
